@@ -126,14 +126,14 @@ public class LGPlayer {
 
 	public boolean join(LGGame game) {
 		if(getPlayer().getGameMode() == GameMode.SPECTATOR) {
-			sendMessage("§cÉtant en mode spectateur, vous ne rejoignez pas la partie !");
+			sendMessage("§cBeing in spectator mode, you do not join the game !");
 			return false;
 		}
 		if(game.tryToJoin(this)) {
 			//To update the skin
 			updateOwnSkin();
 			getPlayer().setWalkSpeed(0.2f);
-	//		sendMessage("§2Vous venez de rejoindre une partie de Loup-Garou. §aBon jeu!");
+	//		sendMessage("§2You have just joined a game of Werewolf. §aGood game!");
 			return true;
 		}
 		return false;
@@ -141,7 +141,7 @@ public class LGPlayer {
 	public void choose(LGChooseCallback callback, LGPlayer... blacklisted) {
 		this.blacklistedChoice = blacklisted == null ? new ArrayList<LGPlayer>(0) : Arrays.asList(blacklisted);
 		this.chooseCallback = callback;
-		//sendMessage("§7§oTIP: Regardez un joueur et tapez le afin de le sélectionner.");
+		//sendMessage("§7§oTIP: Look at a player and tap them to select them.");
 	}
 	public void stopChoosing() {
 		this.blacklistedChoice = null;
