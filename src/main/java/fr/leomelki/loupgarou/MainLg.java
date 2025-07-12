@@ -88,7 +88,7 @@ import lombok.Setter;
 public class MainLg extends JavaPlugin{
 	private static MainLg instance;
 	@Getter private HashMap<String, Constructor<? extends Role>> roles = new HashMap<String, Constructor<? extends Role>>();
-	@Getter private static String prefix = ""/*"§7[§9Loup-Garou§7] "*/;
+	@Getter private static String prefix = ""/*"§7[§9Werewolf§7] "*/;
 	
 	@Getter @Setter private LGGame currentGame;//Because for now, only one game will be playable on one server (flemme)
 	
@@ -214,7 +214,7 @@ public class MainLg extends JavaPlugin{
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(label.equalsIgnoreCase("lg")) {
 			if(!sender.hasPermission("loupgarou.admin")) {
-				sender.sendMessage(prefix+"§4Erreur: Vous n'avez pas la permission...");
+				sender.sendMessage(prefix+"§4Error: You dont have the permission...");
 				return true;
 			}
 			if(args.length >= 1) {
@@ -225,7 +225,7 @@ public class MainLg extends JavaPlugin{
 					list.add(Arrays.asList((double)loc.getBlockX(), loc.getY(), (double)loc.getBlockZ(), (double)loc.getYaw(), (double)loc.getPitch()));
 					saveConfig();
 					loadConfig();
-					sender.sendMessage(prefix+"§aLa position a bien été ajoutée !");
+					sender.sendMessage(prefix+"§aThe position has been added !");
 					return true;
 				}else if(args[0].equalsIgnoreCase("end")) {
 					if(args.length != 2) {
@@ -244,7 +244,7 @@ public class MainLg extends JavaPlugin{
 					}
 					game.cancelWait();
 					game.endGame(LGWinType.EQUAL);
-					game.broadcastMessage("§cLa partie a été arrêtée de force !");
+					game.broadcastMessage("§cThe game was stopped !");
 					return true;
 				}else if(args[0].equalsIgnoreCase("start")) {
 					if(args.length < 2) {
@@ -289,7 +289,7 @@ public class MainLg extends JavaPlugin{
 				}else if(args[0].equalsIgnoreCase("nextNight")) {
 					sender.sendMessage("§aVous êtes passé à la prochaine nuit");
 					if(getCurrentGame() != null) {
-						getCurrentGame().broadcastMessage("§2§lLe passage à la prochaine nuit a été forcé !");
+						getCurrentGame().broadcastMessage("§2§lThe transition to the next night was forced !");
 						for(LGPlayer lgp : getCurrentGame().getInGame())
 							lgp.stopChoosing();
 						getCurrentGame().cancelWait();
@@ -299,7 +299,7 @@ public class MainLg extends JavaPlugin{
 				}else if(args[0].equalsIgnoreCase("nextDay")) {
 					sender.sendMessage("§aVous êtes passé à la prochaine journée");
 					if(getCurrentGame() != null) {
-						getCurrentGame().broadcastMessage("§2§lLe passage à la prochaine journée a été forcé !");
+						getCurrentGame().broadcastMessage("§2§lThe move to the next day was forced !");
 						getCurrentGame().cancelWait();
 						for(LGPlayer lgp : getCurrentGame().getInGame())
 							lgp.stopChoosing();
@@ -408,35 +408,35 @@ public class MainLg extends JavaPlugin{
 	}
 	private void loadRoles() {
 		try {
-			roles.put("LoupGarou", RLoupGarou.class.getConstructor(LGGame.class));
-			roles.put("LoupGarouNoir", RLoupGarouNoir.class.getConstructor(LGGame.class));
-			roles.put("Garde", RGarde.class.getConstructor(LGGame.class));
-			roles.put("Sorciere", RSorciere.class.getConstructor(LGGame.class));
-			roles.put("Voyante", RVoyante.class.getConstructor(LGGame.class));
-			roles.put("Chasseur", RChasseur.class.getConstructor(LGGame.class));
-			roles.put("Villageois", RVillageois.class.getConstructor(LGGame.class));
+			roles.put("Werewolf", RLoupGarou.class.getConstructor(LGGame.class));
+			roles.put("WerewolfBlack", RLoupGarouNoir.class.getConstructor(LGGame.class));
+			roles.put("Guard", RGarde.class.getConstructor(LGGame.class));
+			roles.put("Witch", RSorciere.class.getConstructor(LGGame.class));
+			roles.put("Clairvoyant", RVoyante.class.getConstructor(LGGame.class));
+			roles.put("Hunter", RChasseur.class.getConstructor(LGGame.class));
+			roles.put("Villager", RVillageois.class.getConstructor(LGGame.class));
 			roles.put("Medium", RMedium.class.getConstructor(LGGame.class));
-			roles.put("Dictateur", RDictateur.class.getConstructor(LGGame.class));
+			roles.put("Dictator", RDictateur.class.getConstructor(LGGame.class));
 			roles.put("Cupidon", RCupidon.class.getConstructor(LGGame.class));
 			roles.put("PetiteFille", RPetiteFille.class.getConstructor(LGGame.class));
 			roles.put("ChaperonRouge", RChaperonRouge.class.getConstructor(LGGame.class));
-			roles.put("LoupGarouBlanc", RLoupGarouBlanc.class.getConstructor(LGGame.class));
-			roles.put("Bouffon", RBouffon.class.getConstructor(LGGame.class));
-			roles.put("Ange", RAnge.class.getConstructor(LGGame.class));
-			roles.put("Survivant", RSurvivant.class.getConstructor(LGGame.class));
+			roles.put("WarewolfWhite", RLoupGarouBlanc.class.getConstructor(LGGame.class));
+			roles.put("Jester", RBouffon.class.getConstructor(LGGame.class));
+			roles.put("Angel", RAnge.class.getConstructor(LGGame.class));
+			roles.put("Survivor", RSurvivant.class.getConstructor(LGGame.class));
 			roles.put("Assassin", RAssassin.class.getConstructor(LGGame.class));
 			roles.put("GrandMechantLoup", RGrandMechantLoup.class.getConstructor(LGGame.class));
 			roles.put("Corbeau", RCorbeau.class.getConstructor(LGGame.class));
 			roles.put("Detective", RDetective.class.getConstructor(LGGame.class));
-			roles.put("ChienLoup", RChienLoup.class.getConstructor(LGGame.class));
+			roles.put("Wolfdog", RChienLoup.class.getConstructor(LGGame.class));
 			roles.put("Pirate", RPirate.class.getConstructor(LGGame.class));
-			roles.put("Pyromane", RPyromane.class.getConstructor(LGGame.class));
-			roles.put("Pretre", RPretre.class.getConstructor(LGGame.class));
-			roles.put("Faucheur", RFaucheur.class.getConstructor(LGGame.class));
-			roles.put("EnfantSauvage", REnfantSauvage.class.getConstructor(LGGame.class));
+			roles.put("Pyromaniac", RPyromane.class.getConstructor(LGGame.class));
+			roles.put("Priest", RPretre.class.getConstructor(LGGame.class));
+			roles.put("Reaper", RFaucheur.class.getConstructor(LGGame.class));
+			roles.put("WildChild", REnfantSauvage.class.getConstructor(LGGame.class));
 			roles.put("MontreurDOurs", RMontreurDOurs.class.getConstructor(LGGame.class));
 			roles.put("Vampire", RVampire.class.getConstructor(LGGame.class));
-			roles.put("ChasseurDeVampire", RChasseurDeVampire.class.getConstructor(LGGame.class));
+			roles.put("VampiresHunter", RChasseurDeVampire.class.getConstructor(LGGame.class));
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
