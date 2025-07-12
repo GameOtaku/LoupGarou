@@ -141,8 +141,8 @@ public class LGVote {
 		
 		if(equal && mayor != null && max != 0) {
 			for(LGPlayer player : viewers)
-				player.sendMessage("§9Égalité, le §5§lCapitaine§9 va départager les votes.");
-			mayor.sendMessage("§6Tu dois choisir qui va mourir.");
+				player.sendMessage("§9Tie, §5§lMayor§9 will decide the votes.");
+			mayor.sendMessage("§6You have to choose who will die.");
 
 			ArrayList<LGPlayer> choosable = new ArrayList<LGPlayer>();
 			for(Entry<LGPlayer, List<LGPlayer>> entry : votes.entrySet())
@@ -182,7 +182,7 @@ public class LGVote {
 				callback.run();
 			}, (player, secondsLeft)->{
 				timeout = secondsLeft;
-				return mayor == player ? "§6Il te reste §e"+secondsLeft+" seconde"+(secondsLeft > 1 ? "s" : "")+"§6 pour délibérer" : "§6Le §5§lCapitaine§6 délibère (§e"+secondsLeft+" s§6)";
+				return mayor == player ? "§6You have §e"+secondsLeft+" seconde"+(secondsLeft > 1 ? "s" : "")+"§6left to deliberate" : "§6The §5§lMayor§6 deliberate (§e"+secondsLeft+" s§6)";
 			});
 			mayor.choose(new LGChooseCallback() {
 				
@@ -190,7 +190,7 @@ public class LGVote {
 				public void callback(LGPlayer choosen) {
 					if(choosen != null) {
 						if(blackListed.contains(choosen))
-							mayor.sendMessage("§4§oCe joueur n'est pas concerné par le choix.");
+							mayor.sendMessage("§4§oThis player is not affected by the choice.");
 						else {
 							for(LGPlayer player : participants)
 								if(choosable.contains(player))
@@ -225,7 +225,7 @@ public class LGVote {
 	}
 	public void vote(LGPlayer voter, LGPlayer voted) {
 		if(blacklisted.contains(voted)) {
-			voter.sendMessage("§cVous ne pouvez pas votre pour §7§l"+voted.getName()+"§c.");
+			voter.sendMessage("§cYou cannot vote forr §7§l"+voted.getName()+"§c.");
 			return;
 		}
 		if(voted == voter.getCache().get("vote"))
@@ -258,7 +258,7 @@ public class LGVote {
 		}
 		
 		if(voted != null) {//Si il vient de voter, on ajoute le nouveau vote
-			//voter.sendTitle("", "§7Tu as voté pour §7§l"+voted.getName(), 40);
+			//voter.sendTitle("", "§7You just voted for §7§l"+voted.getName(), 40);
 			if(votes.containsKey(voted))
 				votes.get(voted).add(voter);
 			else
@@ -272,15 +272,15 @@ public class LGVote {
 			String message;
 			if(voted != null) {
 				if(changeVote) {
-					message = "§7§l"+voter.getName()+"§6 a changé son vote pour §7§l"+voted.getName()+"§6.";
-					voter.sendMessage("§6Tu as changé de vote pour §7§l"+voted.getName()+"§6.");
+					message = "§7§l"+voter.getName()+"§6 has changed his vote for §7§l"+voted.getName()+"§6.";
+					voter.sendMessage("§6You changed your vote for §7§l"+voted.getName()+"§6.");
 				} else {
 					message = "§7§l"+voter.getName()+"§6 a voté pour §7§l"+voted.getName()+"§6.";
-					voter.sendMessage("§6Tu as voté pour §7§l"+voted.getName()+"§6.");
+					voter.sendMessage("§6You voted for §7§l"+voted.getName()+"§6.");
 				}
 			} else {
-				message = "§7§l"+voter.getName()+"§6 a annulé son vote.";
-				voter.sendMessage("§6Tu as annulé ton vote.");
+				message = "§7§l"+voter.getName()+"§6 has canceled his vote.";
+				voter.sendMessage("§6You canceled your vote.");
 			}
 			
 			for(LGPlayer player : viewers)
